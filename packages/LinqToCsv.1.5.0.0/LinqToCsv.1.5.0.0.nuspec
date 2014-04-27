@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>LinqToCsv</id>
+    <version>1.5.0.0</version>
+    <title>LINQtoCSV</title>
+    <authors>Matt Perdeck</authors>
+    <owners>Matt Perdeck</owners>
+    <projectUrl>http://www.codeproject.com/Articles/25133/LINQ-to-CSV-library</projectUrl>
+    <iconUrl>http://nuget.org/Media/Default/Packages/LinqToCsv/1.0.0.0/logo.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Popular, easy to use library to read and write CSV and tab delimited files. Supports data fields containing commas and line breaks. Supports different character encodings, separator characters and date and number formats. Robust error handling lets you quickly fix problems in large input files.</description>
+    <summary>Serialise/Deserialize your classes to/from CSV and tab delimited files. Very flexible. Supports international date and number formats.</summary>
+    <copyright>Copyright 2014</copyright>
+    <tags>CSV LINQ tab delimited</tags>
+  </metadata>
+</package>

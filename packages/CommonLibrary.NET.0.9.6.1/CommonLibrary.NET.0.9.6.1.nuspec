@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>CommonLibrary.NET</id>
+    <version>0.9.6.1</version>
+    <title>CommonLibrary.NET</title>
+    <authors>Sean Sparkman</authors>
+    <owners>Sean Sparkman</owners>
+    <licenseUrl>http://commonlibrarynet.codeplex.com/license</licenseUrl>
+    <projectUrl>http://commonlibrarynet.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An unofficial release of the CommonLibrary.NET library.</description>
+    <summary>An unofficial release of the CommonLibrary.NET library.</summary>
+    <copyright>2011</copyright>
+  </metadata>
+</package>
