@@ -16,15 +16,6 @@ namespace hearthdecktracker
     {
         private bool dragging;
         private Point offset;
-        //private TableLayoutPanel tab;
-        /*public static Color Interpolate(this Color source, Color target, double percent)
-        {
-            var r = (byte)(source.R + (target.R - source.R) * percent);
-            var g = (byte)(source.G + (target.G - source.G) * percent);
-            var b = (byte)(source.B + (target.B - source.B) * percent);
-
-            return Color.FromArgb(255, r, g, b);
-        }*/
 
         public class Card
         {
@@ -579,174 +570,99 @@ namespace hearthdecktracker
          * Displaying stuff
          *******************/
 
-        /*private void update_decklist(object sender, EventArgs e)
-        {
-            var i = 1;
-
-            tab = new TableLayoutPanel();
-            tab.Visible = false;
-            tab.SuspendLayout();
-            this.Controls.Add(tab);
-            tab.ColumnCount = 5;
-            //tab.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 25F));
-            tab.Location = new Point(1, 95);
-            tab.Name = "tableLayoutPanel1";
-            tab.RowCount = ((IEnumerable<Deckcard>)comboBox1.SelectedValue).Count() + 1;
-            //tab.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tab.Size = new Size(330, 700);
-            //tab.TabIndex = 7;
-
-            // make a new row class, name it row1, and just get row1.atk
-
-            tab.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10.0F));
-            tab.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70.0F));
-            tab.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25.0F));
-            tab.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25.0F));
-            tab.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10.0F));
-
-            var h1 = new Label();
-            h1.Text = "mana";
-            h1.Font = new Font("BlizzardGlobal", 6F);
-            var h2 = new Label();
-            h2.Text = "name";
-            h2.Font = new Font("BlizzardGlobal", 9F);
-            var h3 = new Label();
-            h3.Text = "atk/def";
-            h3.Font = new Font("BlizzardGlobal", 9F);
-            var h4 = new Label();
-            h4.AutoSize = true;
-            h4.Text = "dmg,heal,Δatk\ntarget";
-            h4.Font = new Font("BlizzardGlobal", 5F);
-            var h5 = new Label();
-            h5.Text = "amt";
-            h5.Font = new Font("BlizzardGlobal", 7F);
-
-            tab.Controls.Add(h1, 0, 0);
-            tab.Controls.Add(h2, 1, 0);
-            tab.Controls.Add(h3, 2, 0);
-            tab.Controls.Add(h4, 3, 0);
-            tab.Controls.Add(h5, 4, 0);
-
-            foreach (Deckcard card in (IEnumerable<Deckcard>)comboBox1.SelectedValue)
-            {
-
-                //MessageBox.Show(card.carddetails.Text.ToString());
-                var lab1 = new Label();
-                lab1.BorderStyle = BorderStyle.Fixed3D;
-                //lab.Name = "label1";
-                lab1.AutoSize = true;
-                lab1.Text = card.carddetails.Mana.ToString();
-                lab1.BackColor = Color.White;
-                //lab.Font = new Font("BlizzardGlobal", 14F, FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                lab1.Font = new Font("BlizzardGlobal", 12F);
-
-                var lab2 = new Label();
-                lab2.BorderStyle = BorderStyle.Fixed3D;
-                //lab2.AutoSize = true;
-                lab2.AutoSize = true;
-                lab2.Text = card.carddetails.Name;
-                lab2.BackColor = Color.White;
-                lab2.Font = new Font("BlizzardGlobal", 12F);
-
-                var lab3 = new Label();
-                lab3.BorderStyle = BorderStyle.Fixed3D;
-                lab3.Text = card.carddetails.Atk + "/" + card.carddetails.Def; //adjust for spells
-                lab3.BackColor = Color.White;
-                lab3.Font = new Font("BlizzardGlobal", 12F);
-
-                var lab4 = new Label();
-                lab4.BorderStyle = BorderStyle.Fixed3D;
-                lab4.Text = card.carddetails.Dmg + "|" + card.carddetails.Heal + "|" + card.carddetails.Catk +
-                    "\n" + card.carddetails.Targ;
-                lab4.BackColor = Color.White;
-                lab4.Font = new Font("BlizzardGlobal", 7F);
-
-                var lab5 = new Label();
-                lab5.BorderStyle = BorderStyle.Fixed3D;
-                lab5.Text = card.Amount.ToString();
-                lab5.BackColor = Color.White;
-                lab5.Font = new Font("BlizzardGlobal", 12F);
-
-                tab.Controls.Add(lab1, 0, i);
-                tab.Controls.Add(lab2, 1, i);
-                tab.Controls.Add(lab3, 2, i);
-                tab.Controls.Add(lab4, 3, i);
-                tab.Controls.Add(lab5, 4, i);
-
-                i++;
-            }
-
-            //tab.Click += new System.EventHandler(this.label2_Click);
-            tab.ResumeLayout();
-            tab.Visible = true;
-
-        }
-
-        //private void tableLayoutPanel1_Click(object sender, EventArgs e)
-        //{
-         //   var cellPos = GetRowColIndex(
-         //       tableLayoutPanel1,
-         //       tableLayoutPanel1.PointToClient(Cursor.Position));
-        //}
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBox1.SelectedIndex != 0)
             {
-                if (tab != null)
+                update_decklist();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex != 0)
+            {
+                update_decklist();
+            }
+        }
+
+        float pct;
+
+        private void InitializeTimer() {
+            Timer t = new Timer();
+            t.Interval = 10;
+            pct = 0F;
+            t.Tick += new EventHandler(timer1_Tick);
+            t.Enabled = true;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Timer t = (Timer)sender;
+            
+            if (pct < 1F)
+            {
+                dataGridView1.CurrentRow.DefaultCellStyle.SelectionBackColor = dataGridView1.CurrentRow.DefaultCellStyle.SelectionBackColor.Interpolate(SystemColors.Window, pct);
+                pct += 0.2F;
+            }
+            else
+            {
+                t.Enabled = false;
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int oldamt;
+            int chg;
+
+            if (e.Button == MouseButtons.Left)
+            {
+                oldamt = int.Parse(dataGridView1.CurrentRow.Cells["Amt"].Value.ToString());
+                chg = -1;
+                if (oldamt != 0)
                 {
-                    tab.Dispose();
+                    dataGridView1.CurrentRow.DefaultCellStyle.SelectionBackColor = Color.Red;
+
+                    int newamt = Math.Max(0, oldamt + chg);
+                    dataGridView1.CurrentRow.Cells["Amt"].Value = newamt;
+
+                    InitializeTimer();
+
+                    if (newamt == 0)
+                    {
+                        dataGridView1.CurrentRow.DefaultCellStyle.ForeColor = Color.DarkGray;
+                        dataGridView1.CurrentRow.DefaultCellStyle.SelectionForeColor = Color.DarkGray;
+                    }
                 }
-
-                update_decklist(sender, e);
             }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            //string currentdeck = comboBox1.Text;
-            if ((tab != null) && (comboBox1.SelectedIndex != 0))
+            else if (e.Button == MouseButtons.Right)
             {
-                tab.Dispose();
-                update_decklist(sender, e);
+                dataGridView1.ClearSelection();
+                dataGridView1.CurrentCell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                dataGridView1.Rows[e.RowIndex].Selected = true;
+                dataGridView1.Focus();
+
+                oldamt = int.Parse(dataGridView1.CurrentRow.Cells["Amt"].Value.ToString());
+                chg = 1;
+
+                if (oldamt != 2)
+                {
+                    dataGridView1.CurrentRow.DefaultCellStyle.SelectionBackColor = Color.Green;
+
+                    int newamt = Math.Max(0, oldamt + chg);
+                    dataGridView1.CurrentRow.Cells["Amt"].Value = newamt;
+
+                    InitializeTimer();
+
+                    dataGridView1.CurrentRow.DefaultCellStyle.ForeColor = SystemColors.ControlText;
+                    dataGridView1.CurrentRow.DefaultCellStyle.SelectionForeColor = SystemColors.ControlText;
+                }
             }
-        }
-
-        */
-
-
-        /****************
-         * new way
-         * **************/
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBox1.SelectedIndex != 0)
+            else
             {
-                update_decklist();
+                chg = 0;
             }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (comboBox1.SelectedIndex != 0)
-            {
-                update_decklist();
-            }
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int oldamt = int.Parse(dataGridView1.CurrentRow.Cells["Amt"].Value.ToString());
-            int newamt = Math.Max(0, oldamt - 1);
-            dataGridView1.CurrentRow.Cells["Amt"].Value = newamt;
-            if (newamt == 0)
-            {
-                dataGridView1.CurrentRow.DefaultCellStyle.ForeColor = Color.DarkGray;
-                dataGridView1.CurrentRow.DefaultCellStyle.SelectionForeColor = Color.DarkGray;
-            }
-            //dataGridView1.CurrentRow.DefaultCellStyle.SelectionBackColor.Interpolate = dataGridViewCellStyle1.BackColor;
-            //dataGridView1.CurrentRow.DefaultCellStyle.SelectionBackColor = dataGridViewCellStyle1.BackColor;
-            //dataGridViewCellStyle1.SelectionForeColor = dataGridViewCellStyle1.ForeColor;
         }
 
         private void update_decklist()
@@ -755,10 +671,18 @@ namespace hearthdecktracker
 
             foreach (Deckcard card in (IEnumerable<Deckcard>)comboBox1.SelectedValue)
             {
+                string ad;
+                if (card.carddetails.Atk == 0 && card.carddetails.Def == 0)
+                {
+                    ad = "---";
+                }
+                else {
+                    ad = card.carddetails.Atk + "/" + card.carddetails.Def;
+                }
                 dataGridView1.Rows.Add(
                     Convert.ToInt32(card.carddetails.Mana),
                     card.carddetails.Name,
-                    card.carddetails.Atk + "/" + card.carddetails.Def, //adjust for spells
+                    ad,
                     card.carddetails.Dmg + "|" + card.carddetails.Heal + "|" + card.carddetails.Catk,
                     card.carddetails.Targ,
                     Convert.ToInt32(card.Amount)
@@ -766,19 +690,19 @@ namespace hearthdecktracker
             }
 
             dataGridView1.Visible = true;
-            /*
-            tab.RowCount = ((IEnumerable<Deckcard>)comboBox1.SelectedValue).Count() + 1;
-            tab.Size = new Size(330, 700);
-
-            // make a new row class, name it row1, and just get row1.atk
-
-
-            //tab.Click += new System.EventHandler(this.label2_Click);
-            */
-
-
         }
 
+    }
+    public static class MyColorsExtensions
+    {
+        public static Color Interpolate(this Color source, Color target, double percent)
+        {
+            var r = (byte)(source.R + (target.R - source.R) * percent);
+            var g = (byte)(source.G + (target.G - source.G) * percent);
+            var b = (byte)(source.B + (target.B - source.B) * percent);
+
+            return Color.FromArgb(255, r, g, b);
+        }
     }
 
 }
