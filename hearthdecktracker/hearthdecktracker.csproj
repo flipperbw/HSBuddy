@@ -11,6 +11,7 @@
     <AssemblyName>hearthdecktracker</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -47,14 +47,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Hearthstone\Hearthstone_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Hearthstone\Hearthstone_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
     <Reference Include="CommonLibrary">
       <HintPath>..\packages\CommonLibrary.NET.0.9.6.1\lib\CommonLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CSVFile_1.1">
-      <HintPath>D:\Downloads\CSVFile_1.1.dll</HintPath>
-    </Reference>
-    <Reference Include="CsvHelper">
-      <HintPath>..\packages\CsvHelper.2.5.0\lib\net40-client\CsvHelper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
@@ -65,11 +65,23 @@
     <Reference Include="GenericParsing">
       <HintPath>..\..\..\..\..\Desktop\GenericParser_bin\GenericParsing.dll</HintPath>
     </Reference>
+    <Reference Include="Google.ProtocolBuffers">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Hearthstone\Hearthstone_Data\Managed\Google.ProtocolBuffers.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.ProtocolBuffersLite">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Hearthstone\Hearthstone_Data\Managed\Google.ProtocolBuffersLite.dll</HintPath>
+    </Reference>
     <Reference Include="LinqKit">
       <HintPath>..\packages\LINQKit.1.1.1\lib\net45\LinqKit.dll</HintPath>
     </Reference>
     <Reference Include="LINQtoCSV">
       <HintPath>..\packages\LINQtoCSV.1.5.0.0\lib\net35\LINQtoCSV.dll</HintPath>
+    </Reference>
+    <Reference Include="PcapDotNet.Core">
+      <HintPath>..\..\..\brettassemblies\PcapDotNet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PcapDotNet.Packets">
+      <HintPath>..\..\..\brettassemblies\PcapDotNet.Packets.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
