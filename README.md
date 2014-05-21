@@ -5,6 +5,8 @@ Keep track of played cards in Hearthstone.
 
 *STATUS: Extreme Alpha*
 
+UPDATE: If you're nervous about the usage of TCP sniffing, I've very recently discovered another way to track all your cards using built-in Hearthstone logging. More details on that to come.
+
 ---
 Reminders
 ---
