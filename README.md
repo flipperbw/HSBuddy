@@ -23,7 +23,7 @@ Where I'd like it to go
 
 I see the end product being the following:
 
-- Two windows docked around the Hearthstone interface - one on the left for your opponent's (predicted) decklist, one of the right for your (known) list.
+- Two windows docked around the Hearthstone interface - one on the left for your opponent's (predicted) decklist, one on the right for your (known) list.
 - Easy importing of decklists (screenshots are ideal, but at least give the option for a file)
 - For opponent's possible decks, include common variation of cards. This would contain a "decision tree" where if Card A or Card B is played, then the other is likely included, but not Card C.
 - Use the information I've included in hd.csv to calculate the maximum theoretical damage one can expect next turn, and display it in the window.
