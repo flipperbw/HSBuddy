@@ -10,9 +10,11 @@ VERSION: Extreme Alpha
 
 UPDATED: 5/28/14 15:40 EST
 
-I'm going to create the default option of reading from the Hearthstone log files, and only include the TCP option as a fallback. This would make HSBuddy the only program that does not violate the Blizzard TOS. Details on how I'm going to do that are here:
+I'm *considering* making the default tracking method reading from the Hearthstone log files, and only include the TCP option as a fallback. This would make HSBuddy the only program that does not violate the Blizzard TOS. Details on how I'd do that are here:
 
 http://www.reddit.com/r/hearthstone/comments/268fkk/simple_hearthstone_logging_see_your_complete_play/
+
+However, that method doesn't help us get the decklists automatically, which can be done via image recognition or (easier) TCP. We just have to decide if we want this program FULLY TOS compliant, which I think we do.
 
 ---
 Reminders
