@@ -3,9 +3,15 @@ HSBuddy v0.1
 
 Keep track of played cards in Hearthstone.
 
-*STATUS: Extreme Alpha*
+---
+Current Status:
+---
+VERSION: Extreme Alpha
+UPDATED: 5/28/14 15:40 EST
 
-UPDATE: If you're nervous about the usage of TCP sniffing, I've very recently discovered another way to track all your cards using built-in Hearthstone logging. More details on that to come.
+I'm going to create the default option of reading from the Hearthstone log files, and only include the TCP option as a fallback. This would make HSBuddy the only program that does not violate the Blizzard TOS. Details on how I'm going to do that are here:
+
+http://www.reddit.com/r/hearthstone/comments/268fkk/simple_hearthstone_logging_see_your_complete_play/
 
 ---
 Reminders
