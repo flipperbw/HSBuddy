@@ -11,51 +11,58 @@ namespace hearthdecktracker.data
     [Serializable]
     public class CardList
     {
+        //Implemented a poor-man's Singleton.
+
         #region Properties
-        /// <summary>
-        /// 
-        /// </summary>
-        public List<Card> List { get; set; }
+        private static List<Card> _list;
+        public static List<Card> List 
+        { 
+            get 
+            {
+                if (_list == null)
+                    _list = GetCardList();
+
+                return _list; 
+            } 
+        }
         #endregion
 
         #region Constructors
         /// <summary>
         /// Get the card list, using the default CSV path
         /// </summary>
-        public CardList()
+        private static List<Card> GetCardList()
         {
             //TODO: Move default path to a config file
-            new CardList(Directory.GetCurrentDirectory().ToString() + @"\data\hd.csv");
+            return GetCardList(Directory.GetCurrentDirectory().ToString() + @"\data\hd.csv");
         }
 
         /// <summary>
         /// Get the card list with a specified csvpath
         /// </summary>
         /// <param name="csvPath">Location on the HDD of the card data csv</param>
-        public CardList(string csvPath)
+        private static List<Card> GetCardList(string csvPath)
         {
-            if (List == null)
+            List<Card> cardlist = new List<Card>();
+            CsvFileDescription inputFileDescription = new CsvFileDescription
             {
-                List = new List<Card>();
+                SeparatorChar = ',',
+                FirstLineHasColumnNames = true,
+                IgnoreTrailingSeparatorChar = true,
+                IgnoreUnknownColumns = true
+            };
 
-                CsvFileDescription inputFileDescription = new CsvFileDescription
-                {
-                    SeparatorChar = ',',
-                    FirstLineHasColumnNames = true,
-                    IgnoreTrailingSeparatorChar = true,
-                    IgnoreUnknownColumns = true
-                };
+            CsvContext cc = new CsvContext();
+            IEnumerable<Card> allTheCards = cc.Read<Card>(csvPath, inputFileDescription);
 
-                CsvContext cc = new CsvContext();
-                IEnumerable<Card> allTheCards = cc.Read<Card>(csvPath, inputFileDescription);
+            var cardList = new List<Card>();
 
-                var cardList = new List<Card>();
-
-                foreach (Card c in allTheCards)
-                {
-                    this.List.Add(c);
-                }
+            foreach (Card c in allTheCards)
+            {
+                cardlist.Add(c);
             }
+
+            return cardlist;
         }
         #endregion
     }

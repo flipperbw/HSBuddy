@@ -38,9 +38,8 @@ namespace hearthdecktracker.data
                 if (_card != null) return _card;
                 else
                 {
-                    var _cardList = new CardList();
 
-                    _card = _cardList.List.Find(c => c.Name == CardName);
+                    _card = CardList.List.Find(c => c.Name == CardName);
 
                     return _card;
                 }

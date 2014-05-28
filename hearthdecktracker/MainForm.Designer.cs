@@ -56,7 +56,7 @@ namespace hearthdecktracker
             this.btnClose.TabIndex = 0;
             this.btnClose.Text = "X";
             this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.button1_Click);
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnRefresh
             // 
@@ -68,7 +68,7 @@ namespace hearthdecktracker
             this.btnRefresh.Size = new System.Drawing.Size(36, 35);
             this.btnRefresh.TabIndex = 2;
             this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.button2_Click);
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // cbDeckCardLists
             // 
@@ -82,7 +82,7 @@ namespace hearthdecktracker
             this.cbDeckCardLists.Size = new System.Drawing.Size(226, 34);
             this.cbDeckCardLists.TabIndex = 4;
             this.cbDeckCardLists.ValueMember = "Cardlist";
-            this.cbDeckCardLists.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.cbDeckCardLists.SelectedIndexChanged += new System.EventHandler(this.cbDeckCardLists_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -136,7 +136,7 @@ namespace hearthdecktracker
             this.gvDeckCardList.Size = new System.Drawing.Size(315, 700);
             this.gvDeckCardList.TabIndex = 8;
             this.gvDeckCardList.Visible = false;
-            this.gvDeckCardList.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellContentClick);
+            this.gvDeckCardList.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gvDeckCardList_CellContentClick);
             // 
             // mana
             // 
@@ -204,10 +204,10 @@ namespace hearthdecktracker
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainForm";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);
             ((System.ComponentModel.ISupportInitialize)(this.gvDeckCardList)).EndInit();
             this.ResumeLayout(false);
 

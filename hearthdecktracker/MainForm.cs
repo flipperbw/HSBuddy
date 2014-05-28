@@ -25,10 +25,8 @@ namespace hearthdecktracker
         private bool dragging;
         private Point offset;
 
-        //private static SortedDictionary<int, ConnectAPI.PacketDecoder> s_packetDecoders = new SortedDictionary<int, ConnectAPI.PacketDecoder>();
-        //private static IBattleNet s_impl = new BattleNetDll();
-
-        public CardList allCards = new CardList();
+        private static SortedDictionary<int, ConnectAPI.PacketDecoder> s_packetDecoders = new SortedDictionary<int, ConnectAPI.PacketDecoder>();
+        private static IBattleNet s_impl = new BattleNetDll();
 
         public AllDeckCardLists deckCardLists = new AllDeckCardLists();
 
@@ -36,405 +34,7 @@ namespace hearthdecktracker
         /****************************
          * DECK LISTS ARE HERE
          ***************************/
-
         //Decklists now defined in JSON
-
-        //public void setlists()
-        //{
-        //    Alldecklists.Add(new DeckCardList {
-        //        Name = "Choose Deck...",
-        //        DeckCards = null
-        //    });
-        //    Alldecklists.Add(new DeckCardList
-        //    {
-        //        Name = "Warrior (My Control)",
-        //        DeckCards = {
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Fiery War Axe")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Shield Slam")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Execute")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Whirlwind")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Slam")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Armorsmith")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Cruel Taskmaster")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Shield Block")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Acolyte of Pain")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Frothing Berserker")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Spellbreaker")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Stampeding Kodo")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Faceless Manipulator")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Cairne Bloodhoof")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "The Black Knight")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Baron Geddon")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Grommash Hellscream")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Ragnaros the Firelord")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Alexstrasza")}
-        //        }
-        //    });
-        //    Alldecklists.Add(new Decklist
-        //    {
-        //         Name = "Warrior (Control)",
-        //         CardList = {
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Fiery War Axe")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Shield Slam")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Execute")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Whirlwind")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Slam")}, // put an alternate in herecarddetails = Allcards.Find(r => r.Name == "Slam")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Armorsmith")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Cruel Taskmaster")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Shield Block")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Acolyte of Pain")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Big Game Hunter")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Frothing Berserker")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Brawl")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Faceless Manipulator")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Cairne Bloodhoof")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Sylvanas Windrunner")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Baron Geddon")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Grommash Hellscream")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Ragnaros the Firelord")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Alexstrasza")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Ysera")}
-        //        }
-        //    });
-        //    Alldecklists.Add(new Decklist {
-        //        Name = "Warlock (Zoo)",
-        //        CardList = {
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Soulfire")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Abusive Sergeant")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Argent Squire")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Flame Imp")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Shieldbearer")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Voidwalker")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Young Priestess")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Amani Berserker")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Dire Wolf Alpha")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Knife Juggler")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "King Mukla")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Shattered Sun Cleric")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Dark Iron Dwarf")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Defender of Argus")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Doomguard")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "The Black Knight")}
-        //        }
-        //    });
-        //    Alldecklists.Add(new Decklist
-        //    {
-        //        Name = "Warlock (Murlocs)",
-        //        CardList = {
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Soulfire")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Abusive Sergeant")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Flame Imp")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Mortal Coil")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Grimscale Oracle")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Murloc Raider")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Murloc Tidecaller")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Voidwalker")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Young Priestess")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Bluegill Warrior")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Knife Juggler")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Murloc Tidehunter")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Coldlight Seer")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Murloc Warleader")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Leeroy Jenkins")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Old Murk-Eye")}
-        //    }
-        //    });
-        //    Alldecklists.Add(new Decklist {
-        //        Name = "Hunter (Sunshine)",
-        //        CardList = {
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Hunter's Mark") },
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Flare") }, // or 2
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Tracking") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Stonetusk Boar") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Timber Wolf") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Explosive Trap") }, // or 1
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Freezing Trap") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Unleash the Hounds") },
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Ironbeak Owl") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Scavenging Hyena") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Starving Buzzard") },
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Eaglehorn Bow") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Animal Companion") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Kill Command") },
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "King Mukla") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Houndmaster") },
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Leeroy Jenkins") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Savannah Highmane") }
-        //    }});
-        //    Alldecklists.Add(new Decklist
-        //    {
-        //        Name = "Hunter (Cycle)",
-        //        Cardlist = {
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Hunter's Mark") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Arcane Shot") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Flare") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Tracking") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Leper Gnome") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Stonetusk Boar") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Timber Wolf") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Explosive Trap") },
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Freezing Trap") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Unleash the Hounds") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Loot Hoarder") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Starving Buzzard") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Eaglehorn Bow") },
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Deadly Shot") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Kill Command") },
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Leeroy Jenkins") },
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "The Black Knight") }
-        //    }
-        //    });
-        //    Alldecklists.Add(new Decklist
-        //    {
-        //        Name = "Hunter (Kolento)",
-        //        Cardlist = {
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Hunter's Mark") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Flare") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Tracking") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Stonetusk Boar") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Timber Wolf") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Unleash the Hounds") },
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Ironbeak Owl") },
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "River Crocolisk") }, //1
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Scavenging Hyena") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Starving Buzzard") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Animal Companion") },
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Deadly Shot") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Kill Command") },
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "King Mukla") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Houndmaster") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Stampeding Kodo") },
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Savannah Highmane") }
-        //    }
-        //    });
-        //    Alldecklists.Add(new Decklist
-        //    {
-        //        Name = "Priest (Amaz)",
-        //        Cardlist = {
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Circle of Healing")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Power Word: Shield")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Northshire Cleric")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Shadow Word: Pain")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Acidic Swamp Ooze")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Sunfury Protector")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Wild Pyromancer")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Shadow Word: Death")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Thoughtsteal")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Earthen Ring Farseer")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Injured Blademaster")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Shadow Madness")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Auchenai Soulpriest")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Sen'jin Shieldmasta")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Holy Nova")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Holy Fire")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Cabal Shadow Priest")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Sylvanas Windrunner")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Ragnaros the Firelord")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Mind Control")}
-        //    }
-        //    });
-        //    Alldecklists.Add(new Decklist
-        //    {
-        //        Name = "Druid (Watcher)",
-        //        Cardlist = {
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Innervate")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Mark of the Wild")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Wrath")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Ancient Watcher")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Sunfury Protector")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Bloodmage Thalnos")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Harvest Golem")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Big Game Hunter")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Savage Roar")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Chillwind Yeti")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Defender of Argus")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Swipe")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Keeper of the Grove")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Druid of the Claw")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Cairne Bloodhoof")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "The Black Knight")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Force of Nature")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Ancient of Lore")},
-        //    }
-        //    });
-        //    Alldecklists.Add(new Decklist
-        //    {
-        //        Name = "Druid (Ramp)",
-        //        Cardlist = {
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Innervate")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Mark of the Wild")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Wild Growth")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Wrath")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Bloodmage Thalnos")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Healing Touch")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Big Game Hunter")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Swipe")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Keeper of the Grove")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Sen'jin Shieldmasta")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Druid of the Claw")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Faceless Manipulator")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Gadgetzan Auctioneer")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Cairne Bloodhoof")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Sunwalker")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "The Black Knight")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Ancient of Lore")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Ragnaros the Firelord")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Cenarius")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Ysera")},
-        //    }
-        //    });
-        //    Alldecklists.Add(new Decklist
-        //    {
-        //        Name = "Rogue (Miracle)",
-        //        Cardlist = {
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Backstab")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Preparation")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Shadowstep")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Cold Blood")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Conceal")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Deadly Poison")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Blade Flurry")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Eviscerate")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Sap")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Shiv")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Bloodmage Thalnos")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Edwin VanCleef")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Acolyte of Pain")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Fan of Knives")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "SI:7 Agent")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Leeroy Jenkins")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Gadgetzan Auctioneer")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Assassin's Blade")}
-        //    }
-        //    });
-        //    Alldecklists.Add(new Decklist
-        //    {
-        //        Name = "Rogue (Malygos)",
-        //        Cardlist = {
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Backstab")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Preparation")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Deadly Poison")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Sinister Strike")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Blade Flurry")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Eviscerate")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Sap")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Shiv")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Bloodmage Thalnos")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Loot Hoarder")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Edwin VanCleef")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Fan of Knives")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "SI:7 Agent")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Earthen Ring Farseer")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Gadgetzan Auctioneer")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Azure Drake")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Assassin's Blade")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Malygos")}
-        //    }
-        //    });
-        //    Alldecklists.Add(new Decklist
-        //    {
-        //        Name = "Warlock (Handlock)",
-        //        Cardlist = {
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Soulfire")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Mortal Coil")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Power Overwhelming")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Ancient Watcher")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Bloodmage Thalnos")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Ironbeak Owl")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Sunfury Protector")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Big Game Hunter")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Earthen Ring Farseer")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Shadowflame")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Defender of Argus")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Leeroy Jenkins")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Twilight Drake")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Faceless Manipulator")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Siphon Soul")},
-        //            new Deckcard { Amount = 1, carddetails = allCards.Find(r => r.Name == "Alexstrasza")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Mountain Giant")},
-        //            new Deckcard { Amount = 2, carddetails = allCards.Find(r => r.Name == "Molten Giant")}
-        //    }
-        //    });
-        //    Alldecklists.Add(new Decklist
-        //    {
-        //        Name = "Mage (Aggro)",
-        //        Cardlist = {
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Arcane Missiles"), Amount = 2 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Ice Lance"), Amount = 2 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Mirror Image"), Amount = 2 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Argent Squire"), Amount = 1 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Leper Gnome"), Amount = 2 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Mana Wyrm"), Amount = 2 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Frostbolt"), Amount = 2 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Bloodmage Thalnos"), Amount = 1 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Knife Juggler"), Amount = 2 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Loot Hoarder"), Amount = 2 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Sorcerer's Apprentice"), Amount = 2 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Arcane Intellect"), Amount = 2 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Wolfrider"), Amount = 2 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Fireball"), Amount = 2 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Water Elemental"), Amount = 2 },
-        //            new Deckcard { carddetails = allCards.Find(r => r.Name == "Azure Drake"), Amount = 2 },
-        //    }
-        //    });
-        //    Alldecklists.Add(new Decklist
-        //    {
-        //        Name = "Shaman (Do It)",
-        //        Cardlist = {
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Earth Shock")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Lightning Bolt")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Rockbiter Weapon")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Stormforged Axe")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Windfury")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Acidic Swamp Ooze")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Bloodmage Thalnos")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Flametongue Totem")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Wild Pyromancer")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Feral Spirit")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Hex")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Lightning Storm")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Mana Tide Totem")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Unbound Elemental")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Defender of Argus")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Leeroy Jenkins")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Azure Drake")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Gadgetzan Auctioneer")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Argent Commander")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Cairne Bloodhoof")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Fire Elemental")},
-        //    }
-        //    });
-        //    Alldecklists.Add(new Decklist
-        //    {
-        //        Name = "Paladin (Control)",
-        //        Cardlist = {
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Argent Squire")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Equality")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Bloodmage Thalnos")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Sunfury Protector")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Wild Pyromancer")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Sword of Justice")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Aldor Peacekeeper")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Earthen Ring Farseer")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Harvest Golem")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Truesilver Champion")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Consecration")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Defender of Argus")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Azure Drake")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Stampeding Kodo")},
-        //            new Deckcard {Amount = 2, carddetails = allCards.Find(r => r.Name == "Avenging Wrath")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Cairne Bloodhoof")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Ragnaros the Firelord")},
-        //            new Deckcard {Amount = 1, carddetails = allCards.Find(r => r.Name == "Tirion Fordring")}
-        //    }
-        //    });
-        //    /*
-        //    Alldecklists.Add(new Decklist {
-        //        Name = "Zoo", Cardlist = {
-        //            new Deckcard {Amount = 2, carddetails = Allcards.Find(r => r.Name == "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")},
-        //    }});
-        //    */
-        //}
 
         public MainForm()
         {
@@ -442,23 +42,23 @@ namespace hearthdecktracker
             cbDeckCardLists.DataSource = deckCardLists.DeckCardLists;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
         }
         
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             dragging = false;
         }
 
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        private void MainForm_MouseDown(object sender, MouseEventArgs e)
         {
             dragging = true;
             offset = new Point(e.X, e.Y);
         }
 
-        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
            if (dragging)
             {
@@ -467,7 +67,7 @@ namespace hearthdecktracker
             }
         }
 
-        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        private void MainForm_MouseUp(object sender, MouseEventArgs e)
         {
             dragging = false;
         }
@@ -479,7 +79,7 @@ namespace hearthdecktracker
          * Displaying stuff
          *******************/
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbDeckCardLists_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbDeckCardLists.SelectedIndex != 0)
             {
@@ -487,7 +87,7 @@ namespace hearthdecktracker
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnRefresh_Click(object sender, EventArgs e)
         {
             if (cbDeckCardLists.SelectedIndex != 0)
             {
@@ -520,7 +120,7 @@ namespace hearthdecktracker
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void gvDeckCardList_CellContentClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             int oldamt;
             int chg;
