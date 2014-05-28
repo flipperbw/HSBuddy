@@ -63,9 +63,6 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="GenericParsing">
-      <HintPath>..\..\..\..\..\Desktop\GenericParser_bin\GenericParsing.dll</HintPath>
-    </Reference>
     <Reference Include="Google.ProtocolBuffers">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Hearthstone\Hearthstone_Data\Managed\Google.ProtocolBuffers.dll</HintPath>
     </Reference>
@@ -81,6 +78,14 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PcapDotNet.Core, Version=0.10.0.20693, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>AssemblyReferences\PcapDotNet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PcapDotNet.Packets, Version=0.10.0.20671, Culture=neutral, PublicKeyToken=4b6f3e583145a652, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>AssemblyReferences\PcapDotNet.Packets.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -165,6 +170,9 @@
     <None Include="data\AllDeckCardLists.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AssemblyReferences\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -61,20 +61,6 @@ namespace hearthdecktracker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to cardname,cardid,cardtext,mana,atk,def,dmg,heal,catk,to
-        ///Cruel Taskmaster,EX1_603,Battlecry: Deal 1 damage to a minion and give it +2 Attack.,2,2,2,1,,2,min
-        ///Inner Rage,EX1_607,Deal 1 damage to a minion and give it +2 Attack.,0,0,0,1,,2,min
-        ///Drain Life,CS2_061,Deal 2 damage. Restore #2 Health to your hero.,3,0,0,2,2,,any/you hero
-        ///Demonfire,EX1_596,&quot;Deal 2 damage to a minion.   If itÕs a friendly Demon, give it +2/+2 instead.&quot;,2,0,0,2,2,2,&quot;min/you, min&quot;
-        ///Holy Nova,CS1_112,Deal 2 damage to all enemies.  Resto [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string hd {
-            get {
-                return ResourceManager.GetString("hd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Refresh_icon {

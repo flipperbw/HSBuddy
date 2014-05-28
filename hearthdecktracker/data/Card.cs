@@ -23,49 +23,55 @@ namespace hearthdecktracker.data
         /// <summary>
         /// 
         /// </summary>
-        [CsvColumn(Name = "cardtext", FieldIndex = 2)]
+        [CsvColumn(Name = "cardid", FieldIndex = 2)]
+        public string ID { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [CsvColumn(Name = "cardtext", FieldIndex = 3)]
         public string Text { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [CsvColumn(Name = "mana", FieldIndex = 3)]
+        [CsvColumn(Name = "mana", FieldIndex = 4)]
         public int Mana { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [CsvColumn(Name = "atk", FieldIndex = 4)]
+        [CsvColumn(Name = "atk", FieldIndex = 5)]
         public int Atk { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [CsvColumn(Name = "def", FieldIndex = 5)]
+        [CsvColumn(Name = "def", FieldIndex = 6)]
         public int Def { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [CsvColumn(Name = "dmg", FieldIndex = 6)]
+        [CsvColumn(Name = "dmg", FieldIndex = 7)]
         public string Dmg { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [CsvColumn(Name = "heal", FieldIndex = 7)]
+        [CsvColumn(Name = "heal", FieldIndex = 8)]
         public string Heal { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [CsvColumn(Name = "catk", FieldIndex = 8)]
+        [CsvColumn(Name = "catk", FieldIndex = 9)]
         public string Catk { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [CsvColumn(Name = "to", FieldIndex = 9)]
+        [CsvColumn(Name = "to", FieldIndex = 10)]
         public string Targ { get; set; }
         #endregion
     }

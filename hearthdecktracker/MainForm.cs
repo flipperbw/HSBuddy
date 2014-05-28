@@ -17,6 +17,7 @@ using PegasusGame;
 using PegasusShared;
 using PegasusUtil;
 using hearthdecktracker.data;
+using System.Threading;
 
 namespace hearthdecktracker
 {
@@ -26,7 +27,9 @@ namespace hearthdecktracker
         private Point offset;
 
         private static SortedDictionary<int, ConnectAPI.PacketDecoder> s_packetDecoders = new SortedDictionary<int, ConnectAPI.PacketDecoder>();
-        private static IBattleNet s_impl = new BattleNetDll();
+        private static Dictionary<int, string> entity_dictionary;
+        private static string cardid;
+        private Thread thread;
 
         public AllDeckCardLists deckCardLists = new AllDeckCardLists();
 
@@ -38,6 +41,7 @@ namespace hearthdecktracker
 
         public MainForm()
         {
+			setuplistener();
             InitializeComponent();
             cbDeckCardLists.DataSource = deckCardLists.DeckCardLists;
         }
@@ -95,28 +99,47 @@ namespace hearthdecktracker
             }
         }
 
-        float pct;
+       
 
-        private void InitializeTimer() {
-            Timer t = new Timer();
-            t.Interval = 10;
-            pct = 0F;
-            t.Tick += new EventHandler(timer1_Tick);
-            t.Enabled = true;
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
+       private void choose_row(string cardname)
         {
-            Timer t = (Timer)sender;
-            
-            if (pct < 1F)
+            if (gvDeckCardList.InvokeRequired)
             {
-                gvDeckCardList.CurrentRow.DefaultCellStyle.SelectionBackColor = gvDeckCardList.CurrentRow.DefaultCellStyle.SelectionBackColor.Interpolate(SystemColors.Window, pct);
-                pct += 0.2F;
+                Invoke(new Action<string>(choose_row), cardname);
             }
             else
             {
-                t.Enabled = false;
+                int oldamt;
+                int chg;
+
+                foreach (DataGridViewRow row in gvDeckCardList.Rows)
+                {
+                    if (row.Cells["Name"].Value.ToString().Equals(cardname))
+                    {
+                        gvDeckCardList.CurrentCell = gvDeckCardList.Rows[row.Index].Cells[0];
+                        //dataGridView1.Rows[row.Index + 1].Selected = true;
+
+                        oldamt = int.Parse(gvDeckCardList.CurrentRow.Cells["Amt"].Value.ToString());
+                        chg = -1;
+                        if (oldamt != 0)
+                        {
+                            gvDeckCardList.CurrentRow.DefaultCellStyle.SelectionBackColor = Color.Red;
+
+                            int newamt = Math.Max(0, oldamt + chg);
+                            gvDeckCardList.CurrentRow.Cells["Amt"].Value = newamt;
+
+                            if (newamt == 0)
+                            {
+                                gvDeckCardList.CurrentRow.DefaultCellStyle.ForeColor = Color.DarkGray;
+                                gvDeckCardList.CurrentRow.DefaultCellStyle.SelectionForeColor = Color.DarkGray;
+                            }
+                            else
+                            {
+                                //dataGridView1.CurrentRow.DefaultCellStyle.ForeColor = Color.DarkGray;
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -136,7 +159,7 @@ namespace hearthdecktracker
                     int newamt = Math.Max(0, oldamt + chg);
                     gvDeckCardList.CurrentRow.Cells["Amt"].Value = newamt;
 
-                    InitializeTimer();
+
 
                     if (newamt == 0)
                     {
@@ -162,8 +185,6 @@ namespace hearthdecktracker
                     int newamt = Math.Max(0, oldamt + chg);
                     gvDeckCardList.CurrentRow.Cells["Amt"].Value = newamt;
 
-                    InitializeTimer();
-
                     gvDeckCardList.CurrentRow.DefaultCellStyle.ForeColor = SystemColors.ControlText;
                     gvDeckCardList.CurrentRow.DefaultCellStyle.SelectionForeColor = SystemColors.ControlText;
                 }
@@ -177,6 +198,7 @@ namespace hearthdecktracker
         private void update_decklist()
         {
             gvDeckCardList.Rows.Clear();
+			entity_dictionary = new Dictionary<int, string>();
 
             DeckCardList selectedDeckCardList = (DeckCardList)cbDeckCardLists.SelectedValue;
 
@@ -201,13 +223,12 @@ namespace hearthdecktracker
             }
 
             gvDeckCardList.Visible = true;
+ 			thread = new Thread(this.readtcpdata);
+            thread.Start();
         }
 
-        private void readtcpdata()
+        private void setuplistener()
         {
-            IList<LivePacketDevice> allDevices = LivePacketDevice.AllLocalMachine;
-            PacketDevice selectedDevice = allDevices[0]; //3
-
             s_packetDecoders.Add(1, new ConnectAPI.DefaultProtobufPacketDecoder<GetGameState, GetGameState.Builder>());
             s_packetDecoders.Add(2, new ConnectAPI.DefaultProtobufPacketDecoder<ChooseOption, ChooseOption.Builder>());
             s_packetDecoders.Add(3, new ConnectAPI.DefaultProtobufPacketDecoder<ChooseEntities, ChooseEntities.Builder>());
@@ -378,22 +399,24 @@ namespace hearthdecktracker
             s_packetDecoders.Add(299, new ConnectAPI.DefaultProtobufPacketDecoder<TriggerEventResponse, TriggerEventResponse.Builder>());
             s_packetDecoders.Add(300, new ConnectAPI.DefaultProtobufPacketDecoder<MassiveLoginReply, MassiveLoginReply.Builder>());
 
+	}
+
+	private void readtcpdata()
+        {
+            IList<LivePacketDevice> allDevices = LivePacketDevice.AllLocalMachine;
+            PacketDevice selectedDevice = allDevices[1]; //3
+
             using (PacketCommunicator communicator = selectedDevice.Open(65536, PacketDeviceOpenAttributes.Promiscuous, 1000))
             {
-                Console.WriteLine("Listening...");
                 communicator.SetFilter("port 1119 or port 3724");
                 communicator.ReceivePackets(0, DispatcherHandler);
             }
-
-            Console.WriteLine("-- End of file reached.");
-            Console.ReadKey();
-
         }
 
-        private static void DispatcherHandler(Packet packet)
+        private void DispatcherHandler(Packet packet)
         {
-            int e = packet.Ethernet.IpV4.Tcp.Http.Length;
-            var d = packet.Buffer.Reverse().Take(e).Reverse().ToArray();
+            int le = packet.Ethernet.IpV4.Tcp.Http.Length;
+            var d = packet.Buffer.Reverse().Take(le).Reverse().ToArray();
 
             PegasusPacket x = new PegasusPacket();
             try
@@ -409,13 +432,10 @@ namespace hearthdecktracker
 
                 if (s_packetDecoders.TryGetValue(x.Type, out decoder))
                 {
-                    Console.WriteLine(packet.Timestamp.ToString("yyyy-MM-dd hh:mm:ss.fff"));
                     PegasusPacket item = decoder.HandlePacket(x);
 
                     var bod = item.Body;
                     var typ = item.Type;
-                    Console.WriteLine(typ);
-                    //var i = item.Body.GetType();
 
                     if (typ == 19)
                     {
@@ -423,42 +443,37 @@ namespace hearthdecktracker
                         IList<PowerHistoryData> listy = history.ListList;
                         foreach (var phd in listy)
                         {
-                            Console.WriteLine(phd);
-                        }
-                    }
-                    else if (typ == 14)
-                    {
-                        AllOptions history = (AllOptions)bod;
-                        IList<PegasusGame.Option> listy = history.OptionsList;
-                        foreach (var phd in listy)
-                        {
-                            Console.WriteLine(phd);
-                        }
-                    }
-                    /*
-                    else if () {
+                            if (phd.HasShowEntity)
+                            {
+                                try
+                                {
+                                    entity_dictionary.Add(phd.ShowEntity.Entity, phd.ShowEntity.Name);
+                                }
+                                catch
+                                {
+                                }
+                            }
+                            else if (phd.HasPowerStart)
+                            {
+                                if (phd.PowerStart.Type == PegasusGame.PowerHistoryStart.Types.Type.PLAY)
+                                {
+                                    if (entity_dictionary.TryGetValue(phd.PowerStart.Source, out cardid))
+                                    {
+                                        string cardname = CardList.List.Find(r => r.ID == cardid).Name;
+                                        choose_row(cardname);
+                                    }
 
-                    }*/
+                                }
+                            }
+                        }
+                    }
+
                     else
                     {
-                        Console.WriteLine(x.Body.ToString());
+                        //Console.WriteLine(x.Body.ToString());
                     }
                 }
             }
-            //tt++;
         }
-
-    }
-    public static class MyColorsExtensions
-    {
-        public static Color Interpolate(this Color source, Color target, double percent)
-        {
-            var r = (byte)(source.R + (target.R - source.R) * percent);
-            var g = (byte)(source.G + (target.G - source.G) * percent);
-            var b = (byte)(source.B + (target.B - source.B) * percent);
-
-            return Color.FromArgb(255, r, g, b);
-        }
-    }
-
+	}
 }
