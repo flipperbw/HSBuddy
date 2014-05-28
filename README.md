@@ -7,6 +7,7 @@ Keep track of played cards in Hearthstone.
 Current Status:
 ---
 VERSION: Extreme Alpha
+
 UPDATED: 5/28/14 15:40 EST
 
 I'm going to create the default option of reading from the Hearthstone log files, and only include the TCP option as a fallback. This would make HSBuddy the only program that does not violate the Blizzard TOS. Details on how I'm going to do that are here:
