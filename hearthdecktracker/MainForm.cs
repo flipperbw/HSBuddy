@@ -31,7 +31,8 @@ namespace hearthdecktracker
         private static string cardid;
         private Thread thread;
 
-        public AllDeckCardLists deckCardLists = new AllDeckCardLists();
+        //Tinkered with the AllDeckCardLists class a bit. Updated for new list access
+        public List<DeckCardList> deckCardLists = AllDeckCardLists.GetLists();
 
 
         /****************************
@@ -43,7 +44,7 @@ namespace hearthdecktracker
         {
 			setuplistener();
             InitializeComponent();
-            cbDeckCardLists.DataSource = deckCardLists.DeckCardLists;
+            cbDeckCardLists.DataSource = deckCardLists;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
