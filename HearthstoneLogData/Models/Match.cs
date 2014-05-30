@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HearthstoneLogData.DAL;
 
 namespace HearthstoneLogData.Models
 {
@@ -30,5 +31,20 @@ namespace HearthstoneLogData.Models
         public string OpposingHeroPowerID { get; set; }
         [ForeignKey("OpposingHeroPowerID")]
         public Card OpposingHeroPower { get; set; }
+
+        public Match CreateMatch(DateTime matchStart, HearthstoneLogDataContext db)
+        {
+            Match match = new Match()
+            {
+                MatchStart = matchStart,
+                MatchEnd = matchStart
+            };
+
+            db.Matches.Add(match);
+            db.SaveChanges();
+
+            return match;
+        }
     }
+
 }

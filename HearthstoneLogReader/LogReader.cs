@@ -29,10 +29,10 @@ namespace HearthstoneLogReader
 
         public void StartReadLog()
         {
-            //TODO: Enable NET logging, generate model objects, instantiate lo
+            //TODO: Enable NET logging, generate model objects, instantiate log
             if (LogMatch == null)
             {
-                CreateMatch(DateTime.Now);
+               _match = Match.CreateMatch(DateTime.Now, db);
             }
 
             _logLines = File.ReadAllLines(FilePath).Length;
@@ -132,21 +132,6 @@ namespace HearthstoneLogReader
 
                 //line = line.Substring(line.IndexOf(']') + 1, line.Length);
             }
-        }
-
-
-        private void CreateMatch(DateTime matchStart)
-        {
-            Match match = new Match()
-                {
-                    MatchStart = matchStart,
-                    MatchEnd = matchStart
-                };
-
-            db.Matches.Add(match);
-            db.SaveChanges();
-
-            _match = match;
         }
     }
 }
